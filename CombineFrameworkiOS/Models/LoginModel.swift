@@ -6,7 +6,7 @@ public struct LoginRequest: Codable {
   let deviceId    : String
   let platform    : Int
   let pushMode    : Int?
-  let uniqueId  : String
+  let uniqueId    : String
   public init(
     emailMobile: String,countryCode:String, password: String, deviceId: String, platform: Int,pushMode: Int,uniqueId:String) {
       self.emailMobile   = emailMobile
@@ -81,7 +81,3 @@ public struct LoginResponseData: Codable {
     self.blockStatus                = blockStatus
   }
 }
-
-
-
-

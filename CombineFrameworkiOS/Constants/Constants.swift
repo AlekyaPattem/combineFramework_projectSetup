@@ -11,41 +11,13 @@ struct Constants {
     static let deviceToken                          = "deviceToken"
     static let deviceType                           = 2
     static let isLoggedIn                           = "isLoggedIn"
-    static let isPremium                            = "isPremium"
-    static let isProfileCreated                     = "isProfielCreated"
-    static let preferenceStep                       = "preferenceStep"
     static let isFirstLoggedIn                      = "isFirstLoggedIn"
     static let platform                             = 1
     static let userId                               = "userId"
-    static let countryCode                          = "countryCode"
-    static let name                                 = "name"
-    static let userImg                              = "userImg"
     static let latitude                             = "latitude"
     static let longitude                            = "longitude"
-    static let profilePicStatus                      = "profilePicStatus"
-    static let subscriptionId                       = "subscriptionId"
-    static let profileStatus                        = "profileStatus"
-    static let pending                               = 0
-    static let approved                              = 1
-    static let rejected                              = 2
-    static let isReadRecipient                      = "isReadRecipient"
-    static let inCall                                = "inCall"
-    static let missed                                = 1
-    static let end                                   = 2
-    static let declined                              = 3
-    static let uuid                                  = UUID()
-    static let inLockState                           = "inLockState"
-    static let maxImageLimit = 50.0
-    static let maxVideoLimit = 500.0
-    static let chatMaxVideoLimit = 50.0
-    static let userName                             = "userName"
-    static let sunsign                              = "sunsign"
-    static let gender                               = "gender"
-    static let userName1                            = "userName1"
-    static let genderId                             = "genderId"
+    static let uuid                                 = UUID()
     static let loginData                            = "loginData"
-    static let countryCodes                         = "countryCodes"
-    static let userDetails                          = "userDetails"
     static let deviceName                           = UIDevice.current.name
     static let deviceModel                          = UIDevice.current.model
     static let systemName                           = UIDevice.current.systemName
@@ -538,33 +510,14 @@ func isLogin()->Bool{
     }
 }
 
-func launchUpdate(isLaunch:Bool) {
-    UserDefaults.standard.setValue(isLaunch, forKey: "launchstatus")
-}
-
-func islaunch()->Bool{
-    if let isUserLoggedIn = UserDefaults.standard.value(forKey: "launchstatus") as? Bool {
-        if isUserLoggedIn {
-            print("User is logged in.")
-            return true
-        } else {
-            print("User is not logged in.")
-            return false
-        }
-    } else {
-        print("User is not logged in.")
-        return false
-    }
-}
-
 class TimeChecker {
     private var timer: Timer?
-
+    
     /// Always runs action if now >= (target - 5min), otherwise schedules it.
     func runFunctionBeforeFiveMinutes(of targetDate: Date, action: @escaping () -> Void) {
         let reminderDate = Calendar.current.date(byAdding: .minute, value: -5, to: targetDate)!
         let now = Date()
-
+        
         if now >= reminderDate {
             // We're already in or past the window — run immediately
             print("⚡️ Time passed or within window. Executing now.")
@@ -578,7 +531,7 @@ class TimeChecker {
             }
         }
     }
-
+    
     func cancel() {
         timer?.invalidate()
         timer = nil

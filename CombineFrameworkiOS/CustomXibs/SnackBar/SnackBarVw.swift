@@ -9,9 +9,9 @@ import UIKit
 
 class SnackBarVw: UIView {
     
-    @IBOutlet weak var imgVw: UIImageView!
-    @IBOutlet weak var parentVw: UIView!
-    @IBOutlet weak var imgVw1: UIImageView!
+    @IBOutlet weak var imgVw    : UIImageView!
+    @IBOutlet weak var parentVw : UIView!
+    @IBOutlet weak var imgVw1   : UIImageView!
     @IBOutlet weak var mesgLabel: UILabel!
     
     func loadingDefaultUI(typeofMsg : SnackBarType)

@@ -23,5 +23,6 @@ public struct RefreshTokenData: Codable{
     public init(accessToken: String, refreshToken: String) {
         self.accessToken    = accessToken
         self.refreshToken   = refreshToken
+//        self.status         = status
     }
 }

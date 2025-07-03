@@ -11,14 +11,14 @@ enum HTTPMethod: String {
 
 enum Endpoint: String {
     case login                          = "userLogin"
-    case getCountryCodes                = "getCountryodes"
+    case getCountryCodes                = "getCountryCodes"
     case regenerateAccessToken          = "regenerateAccessToken"
     case logout                         = "logout"
+    case updateProfileImage             = "updateProfileImage"
 }
 
 var authKey: String {
     get {
-//        print("access Token: - Bearer \(Constants.getUserDefaultsValue(for: Constants.authKey))")
         return "Bearer \(Constants.getUserDefaultsValue(for: Constants.authKey))"
     }
 }
