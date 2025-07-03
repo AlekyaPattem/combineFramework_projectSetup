@@ -1,0 +1,36 @@
+//
+//  LogType.swift
+//  RajaKiRani
+//
+//  Created by KS-MACIMINI-016 on 13/03/25.
+//
+
+import Foundation
+
+public enum LogType: String {
+  case networking = "🌐 [Networking]"
+  case core = "📝 [Info]"
+  case apiUrl = "📟 [API URL]"
+  case inputParamenters = "📩 Input Parameters"
+  case response = "💎 Response"
+  case error = "❌ Error"
+  case authToken = "🔑 [Auth Token]"
+  case deviceToken = "🛡 [Device Token]"
+}
+
+public struct PrintLogger {
+  public static func log(type: LogType, message: String) {
+    #if DEBUG
+    print("[Finding My Nirvana] \(type.rawValue) \(message)\n")
+    #endif
+  }
+
+  public static func modelLog<T: Encodable>(_ data: T, type: LogType, isInput: Bool = true) {
+    #if DEBUG
+    print("[Finding My Nirvana] \(type.rawValue): \n\(data.encodePrint().orEmpty)\n")
+    if !isInput {
+      print("-------------------------------------------------------------------------------------------------------\n")
+    }
+    #endif
+  }
+}
