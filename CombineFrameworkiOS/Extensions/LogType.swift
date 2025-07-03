@@ -1,10 +1,3 @@
-//
-//  LogType.swift
-//  RajaKiRani
-//
-//  Created by KS-MACIMINI-016 on 13/03/25.
-//
-
 import Foundation
 
 public enum LogType: String {

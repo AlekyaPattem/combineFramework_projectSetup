@@ -1,19 +1,9 @@
-//
-//  APIError.swift
-//  RajaKiRani
-//
-//  Created by KS-MACIMINI-016 on 13/03/25.
-//
-
 import Foundation
 
 /// Enum representing all types of API errors returned from requests supported by the application.
 public enum APIError: Error {
     /// Error signaling undefined state of the request/response.
-    case unknown(Int? = nil)
-    case tokenRefreshed
-    /// Request cancelled.
-    case cancelled
+    case unknown
     /// No internet connection.
     case noInternetConnection
     /// User has sent too many requests in a given amount of time.
@@ -29,8 +19,8 @@ public enum APIError: Error {
     case requestTimeout
     /// Generic error message, given when an unexpected condition was encountered and no more specific message is suitable
     case internalServerError
-    /// Server is currently unavailable (e.g. overloaded or down for maintenance).
-    case serviceUnavailable
+    case accountBlocked
+    case someOneLoggedInElsewhere
     /// Server was acting as a gateway or proxy and received an invalid response from the upstream server.
     case badGateway
     case refreshTokenFailed
@@ -39,6 +29,7 @@ public enum APIError: Error {
     case responseError(Int)
     case decodingError(DecodingError)
     case anyError
+    case apiError(String)
     
     var localizedDescription: String {
         switch self {
@@ -50,12 +41,8 @@ public enum APIError: Error {
             return "Bad response code: \(error)"
         case .anyError:
             return "Unknown error has ocurred"
-        case .unknown(_):
+        case .unknown:
             return "Unknown error has ocurred"
-        case .tokenRefreshed:
-            return "tokenRefreshed"
-        case .cancelled:
-            return "cancelled"
         case .noInternetConnection:
             return "noInternetConnection"
         case .tooManyRequests:
@@ -70,18 +57,23 @@ public enum APIError: Error {
             return "requestTimeout"
         case .internalServerError:
             return "internalServerError"
-        case .serviceUnavailable:
-            return "serviceUnavailable"
+        case .accountBlocked:
+            return "accountBlocked"
         case .badGateway:
             return "badGateway"
         case .refreshTokenFailed:
             return "refreshTokenFailed"
         case .serverError(code: let code, message: let message):
             return "serverError: \(code): \(message)"
+        case .apiError(let message):
+            return message
+        case .someOneLoggedInElsewhere:
+            return "someone logged in else where"
         }
     }
 }
-/// Allows to create `APIError` instance from a given status code.
+
+/*/// Allows to create `APIError` instance from a given status code.
 extension APIError {
     // swiftlint:disable:next cyclomatic_complexity
     static func fromCode(_ statusCode: Int) -> APIError {
@@ -93,10 +85,8 @@ extension APIError {
         case 429: return .tooManyRequests
         case 500: return .internalServerError
         case 502: return .badGateway
-        case 503: return .serviceUnavailable
-        case 25: return .cancelled
         case 15: return .noInternetConnection
-        default: return .unknown(statusCode)
+        default: return .unknown
         }
     }
-}
+}*/

@@ -6,7 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		8F9CD44613AF7351E289FC30 /* Pods_CombineFrameworkiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 226A38955110D83696A8030F /* Pods_CombineFrameworkiOS.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		226A38955110D83696A8030F /* Pods_CombineFrameworkiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CombineFrameworkiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4030701263E4BC02B0D6E9BA /* Pods-CombineFrameworkiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CombineFrameworkiOS.debug.xcconfig"; path = "Target Support Files/Pods-CombineFrameworkiOS/Pods-CombineFrameworkiOS.debug.xcconfig"; sourceTree = "<group>"; };
+		5DFF0DB36961145178DF6C4A /* Pods-CombineFrameworkiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CombineFrameworkiOS.release.xcconfig"; path = "Target Support Files/Pods-CombineFrameworkiOS/Pods-CombineFrameworkiOS.release.xcconfig"; sourceTree = "<group>"; };
 		C5584CB22D8D2E6000E1B6C2 /* CombineFrameworkiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CombineFrameworkiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -36,17 +43,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F9CD44613AF7351E289FC30 /* Pods_CombineFrameworkiOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		603AA7422DF910540D0C01F8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4030701263E4BC02B0D6E9BA /* Pods-CombineFrameworkiOS.debug.xcconfig */,
+				5DFF0DB36961145178DF6C4A /* Pods-CombineFrameworkiOS.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		C5584CA92D8D2E6000E1B6C2 = {
 			isa = PBXGroup;
 			children = (
 				C5584CB42D8D2E6000E1B6C2 /* CombineFrameworkiOS */,
 				C5584CB32D8D2E6000E1B6C2 /* Products */,
+				603AA7422DF910540D0C01F8 /* Pods */,
+				FB97AECE5818D6097D0E2FF4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +77,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		FB97AECE5818D6097D0E2FF4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				226A38955110D83696A8030F /* Pods_CombineFrameworkiOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -65,9 +92,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C5584CC52D8D2E6100E1B6C2 /* Build configuration list for PBXNativeTarget "CombineFrameworkiOS" */;
 			buildPhases = (
+				5595620C5FEB4B1A07089158 /* [CP] Check Pods Manifest.lock */,
 				C5584CAE2D8D2E6000E1B6C2 /* Sources */,
 				C5584CAF2D8D2E6000E1B6C2 /* Frameworks */,
 				C5584CB02D8D2E6000E1B6C2 /* Resources */,
+				2D60A7CD9EB46B44E8EDBF05 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -77,8 +106,6 @@
 				C5584CB42D8D2E6000E1B6C2 /* CombineFrameworkiOS */,
 			);
 			name = CombineFrameworkiOS;
-			packageProductDependencies = (
-			);
 			productName = CombineFrameworkiOS;
 			productReference = C5584CB22D8D2E6000E1B6C2 /* CombineFrameworkiOS.app */;
 			productType = "com.apple.product-type.application";
@@ -127,6 +154,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2D60A7CD9EB46B44E8EDBF05 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CombineFrameworkiOS/Pods-CombineFrameworkiOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CombineFrameworkiOS/Pods-CombineFrameworkiOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CombineFrameworkiOS/Pods-CombineFrameworkiOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5595620C5FEB4B1A07089158 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CombineFrameworkiOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C5584CAE2D8D2E6000E1B6C2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -140,6 +209,7 @@
 /* Begin XCBuildConfiguration section */
 		C5584CC62D8D2E6100E1B6C2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4030701263E4BC02B0D6E9BA /* Pods-CombineFrameworkiOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -173,6 +243,7 @@
 		};
 		C5584CC72D8D2E6100E1B6C2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5DFF0DB36961145178DF6C4A /* Pods-CombineFrameworkiOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -15,8 +15,23 @@ class LoginView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginApi()
         setupBindings()
+    }
+    
+    @IBAction func getCountriesBtnActn(_ sender: Any) {
+        getCountriesApi()
+    }
+    
+    @IBAction func loginBtnActn(_ sender: Any) {
+        loginApi()
+    }
+    
+    @IBAction func logoutBtnActn(_ sender: Any) {
+        logoutApi()
+    }
+    
+    func getCountriesApi(){
+        loginVM.getCountries()
     }
     
     func loginApi(){
@@ -30,8 +45,17 @@ class LoginView: UIViewController {
         loginVM.login(input: input)
     }
     
+    func logoutApi(){
+        let input = LogoutRequest(userId: Constants.getUserId())
+        loginVM.logout(input: input)
+    }
+    
     func setupBindings() {
-        loginVM.$loginResponse.sink { [self] response in
+        loginVM.$loginResponse.sink {response in
+        }.store(in: &cancellables)
+        
+        loginVM.$getCountriesResponse.sink{
+            response in
         }.store(in: &cancellables)
     }
 }
