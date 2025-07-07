@@ -19,8 +19,8 @@ class LoginViewModel: ObservableObject {
     
     var profile = CurrentValueSubject<String,Never>("alekyasjkf")
     //    var profile = CurrentValueSubject<String?,Never>(nil)
-    var name = PassthroughSubject<String,Never>()
-    //    var name = PassthroughSubject<String?,Never>()
+//    var name = PassthroughSubject<String,Never>()
+        var name = PassthroughSubject<String?,Never>()
     
     func login(input:LoginRequest) {
         apiReference.postApi(endPoint: Endpoint.login, method: .POST,token: defaultAuthKey,body: input,showLoader: true, responseType: LoginResponse.self)

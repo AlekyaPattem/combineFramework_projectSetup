@@ -120,7 +120,7 @@ class NetworkRequest {
         showLoader  : Bool = false,
         extraParams : String? = nil,
         responseType: T.Type
-    ) -> Future<T, APIError> {
+    ) -> Future<T, APIError> { //A Future is a Combine publisher that emits one value or one failure, then completes. Then the subscription automatically completes (no more emissions)
         return Future<T, APIError> { [self] promise in
             
             guard isInternetAvailable() else {

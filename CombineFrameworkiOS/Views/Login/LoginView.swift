@@ -9,6 +9,16 @@ import UIKit
 import Combine
 import SDWebImage
 
+extension Notification.Name {
+    static let myNotification = Notification.Name("myNotification")
+    static let userLoggedIn = Notification.Name("userLoggedIn")
+}
+
+struct User : Codable {
+    var id: Int
+    var name: String
+}
+
 class LoginView: UIViewController {
     
     //MARK: - Outlets
@@ -18,14 +28,42 @@ class LoginView: UIViewController {
     private var cancellables    = Set<AnyCancellable>()
     private var loginVM         = LoginViewModel()
     var imagePicker             = UIImagePickerController.init()
+    var timer                   : Timer?
+    var secondsLeft             = 10
+    var timerCancellable        : AnyCancellable?
     
     //MARK: - Life cycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBindings()
         loginVM.name.send("Alekya Pattem")
-        //        loginVM.name.send(nil)
+        
+        loginVM.name.send(nil) //nil case
+        
         deviceOrientation()
+        
+        notificationCenterExample()
+        NotificationCenter.default.post(name: .myNotification, object: nil)
+        
+        notificationCenterObjectExample()
+        let user = User(id: 101, name: "Alekhya")
+        NotificationCenter.default.post(name: .userLoggedIn, object: user)
+        
+        notificationCenterUserInfoExample()
+        NotificationCenter.default.post(
+            name: .userLoggedIn,
+            object: nil,
+            userInfo: ["user": user]
+        )
+        
+        NotificationCenter.default.post(
+            name: .userLoggedIn,
+            object: nil,
+            userInfo: [
+                "username": "alekhya",
+                "age": 25
+            ]
+        )
     }
     
     //MARK: - User defined methods
@@ -34,6 +72,7 @@ class LoginView: UIViewController {
             guard response != nil else {
                 return
             }
+            print("login response")
         }.store(in: &cancellables)
         
         loginVM.$getCountriesResponse.sink{
@@ -54,12 +93,13 @@ class LoginView: UIViewController {
             .compactMap{ $0 }
             .sink{
                 response in
+                print("profileImageResponse")
                 self.profileImgView.sd_setImage(with: URL(string: response.data?.profile ?? ""))
             }.store(in: &cancellables)
         
         
         loginVM.profile
-        //            .compactMap{ $0 }
+        //            .compactMap{ $0 } //will only get non-nil values
             .sink{
                 response in
                 //                guard let response = response else {
@@ -69,11 +109,12 @@ class LoginView: UIViewController {
             }.store(in: &cancellables)
         
         loginVM.name
-        //            .compactMap{ $0 }
+//                    .compactMap{ $0 }
+//            .filter { !$0.isEmpty }
             .sink { response in
-                //                guard let response = response else {
-                //                    return
-                //                }
+//                                guard let response = response else { //“If response is not nil, unwrap it into a non-optional response and continue.But if it is nil, then exit the current block (with return).”
+//                                    return
+//                                }
                 print("name is\(response)")
             }.store(in: &cancellables)
     }
@@ -150,13 +191,97 @@ class LoginView: UIViewController {
             .store(in: &cancellables)
     }
     
+    func notificationCenterExample(){
+        NotificationCenter.default
+            .publisher(for: .myNotification)
+            .sink { notification in
+                print("Received Notification via Combine:")
+            }.store(in: &cancellables)
+    }
+    
+    func notificationCenterObjectExample(){
+        NotificationCenter.default
+            .publisher(for: .userLoggedIn)
+            .compactMap { $0.object as? User } // cast the object
+            .sink { user in
+//                let userss = user.object as? User
+//                guard let users = userss else { return }
+                print("Received user via Combine object: \(user.name), id: \(user.id)")
+            }.store(in: &cancellables)
+    }
+    
+    func notificationCenterUserInfoExample(){
+        NotificationCenter.default
+            .publisher(for: .userLoggedIn)
+            .compactMap { $0.userInfo?["user"] as? User }
+            .sink { user in
+                print("Received user via Combine user info: \(user.name), id: \(user.id)")
+            }
+            .store(in: &cancellables)
+        
+            NotificationCenter.default
+                .publisher(for: .userLoggedIn)
+                .sink { notification in
+                    if let userInfo = notification.userInfo,
+                       let username = userInfo["username"] as? String,
+                       let age = userInfo["age"] as? Int {
+                        print("Received: username = \(username), age = \(age)")
+                    } else {
+                        print("Invalid or missing data")
+                    }
+                }.store(in: &cancellables)
+    }
+    
+    func traditionalNC(){
+//        NotificationCenter.default.post(name: Notification.Name("orders"), object: nil, userInfo: ["orderObj": orderObj, "notificationType": 0])
+//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "chefSpecial"), object: nil)
+//        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "chefSpecial"), object: nil, queue: nil) { notification in
+//            if let order = notification.userInfo?["orderObj"] as? String {
+//                self.selectedId = order
+//                self.initialSetup()
+//                self.filterBtnStatusSetup()
+//            }
+//        }
+        
+        
+//        NotificationCenter.default.post(name: Notification.Name("chatClose"), object: nil)
+//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "chatClose"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(ChatRoomVC.onCloseBtnAction), name: NSNotification.Name(rawValue:"chatClose"), object: nil)
+    }
+    
+    func startTraditionalTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            print("⏰ Traditional Timer fired at \(Date())")
+        }
+    }
+    
+    func startCombineTimer() {
+        timerCancellable?.cancel()
+        secondsLeft = 30
+        timerCancellable = Timer.publish(every: 1.0, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                if self.secondsLeft > 0 {
+                    self.secondsLeft -= 1
+                    print("seconds - \(self.secondsLeft)")
+                } else {
+                    print("⏰ Countdown finished!")
+                    timerCancellable?.cancel()
+                }
+            }
+    }
+    
     //MARK: - Button Actions
     @IBAction func getCountriesBtnActn(_ sender: Any) {
         getCountriesApi()
     }
     
     @IBAction func loginBtnActn(_ sender: Any) {
-        loginApi()
+//        loginApi()
+//        startTraditionalTimer()
+//        timer?.invalidate()
+        startCombineTimer()
     }
     
     @IBAction func uploadImageBtnActn(_ sender: Any) {
